@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "web eccomerce",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuclonghuudong/2025_01_ECCOMERCE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phuclonghuudong/2025_01_ECCOMERCE/issues"
+  },
+  "homepage": "https://github.com/phuclonghuudong/2025_01_ECCOMERCE#readme"
+}

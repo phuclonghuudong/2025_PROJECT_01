@@ -1,0 +1,2 @@
+HTTP Status Code:   https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+RESEND              https://resend.com/docs/send-with-nodejs
