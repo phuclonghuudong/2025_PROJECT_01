@@ -1,12 +1,12 @@
-import express, { response } from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
-import helmet from "helmet";
+const express = require("express");
+const cors = require("cors");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
+const helmet = require("helmet");
 dotenv.config();
-import connectDB from "./config/connectDB.js";
-import userRouter from "./route/user.route.js";
+const connectDB = require("./config/connectDB");
+const userRouter = require("./route/user.route.js");
 
 const app = express();
 app.use(

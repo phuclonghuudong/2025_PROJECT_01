@@ -1,5 +1,5 @@
-import UserModel from "../models/user.model.js";
-import jwt from "jsonwebtoken";
+const UserModel = require("../models/user.model.js");
+const jwt = require("jsonwebtoken");
 
 const generateRefreshToken = async (userId) => {
   const token = await jwt.sign(
@@ -18,4 +18,4 @@ const generateRefreshToken = async (userId) => {
   return token;
 };
 
-export default generateRefreshToken;
+module.exports = generateRefreshToken;
