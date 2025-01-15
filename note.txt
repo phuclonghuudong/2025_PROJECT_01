@@ -3,3 +3,5 @@ RESEND              https://resend.com/docs/send-with-nodejs
                     Email
 Cloudinary:         https://cloudinary.com
                     Quản lý hình ảnh, đa phương tiện
+Font                https://fonts.google.com
+                    Font chữ
