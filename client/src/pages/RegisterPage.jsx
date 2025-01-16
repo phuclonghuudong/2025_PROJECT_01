@@ -68,7 +68,7 @@ const RegisterPage = () => {
   return (
     <section className=" w-full container mx-auto px-2">
       <div className="bg-white my-4 max-w-lg mx-auto rounded p-4">
-        <p>Welcome to PHPMol</p>
+        <p className="font-bold text-lg mb-3">Welcome to PHPMol</p>
 
         <form className="grid gap-4 mt-2" onSubmit={handleSubmit}>
           <div className="grid gap-1">

@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import toast from "react-hot-toast";
 import Axios from "../utils/Axios";
 import SummaryApi from "../common/SummaryApi";
 import AxiosToastError from "../utils/AxiosToastError";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const ResetPassword = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState({
     email: "",
-    password: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
+  useEffect(() => {
+    if (!location?.state?.data?.success) {
+      navigate("/");
+    }
+
+    if (location?.state?.email) {
+      setData((pre) => {
+        return { ...pre, email: location?.state?.email };
+      });
+    }
+  }, []);
+
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleOnchange = (event) => {
     const { name, value } = event.target;
@@ -31,9 +46,14 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (data.confirmPassword !== data.newPassword) {
+      toast.error("new password and confirm password must be same");
+      return;
+    }
+
     try {
       const response = await Axios({
-        ...SummaryApi.login,
+        ...SummaryApi.reset_password,
         data: data,
       });
 
@@ -43,18 +63,15 @@ const LoginPage = () => {
 
       if (response?.data?.success) {
         toast.success(response?.data?.message);
-        localStorage.setItem("accessToken", response?.data?.data?.accessToken);
-        localStorage.setItem(
-          "refreshToken",
-          response?.data?.data?.refreshToken
-        );
         setData({
           email: "",
           password: "",
+          confirmPassword: "",
         });
-        navigate("/");
+        navigate("/login");
       }
     } catch (error) {
+      console.log("check", error);
       AxiosToastError(error);
     }
   };
@@ -62,32 +79,18 @@ const LoginPage = () => {
   return (
     <section className=" w-full container mx-auto px-2">
       <div className="bg-white my-4 max-w-lg mx-auto rounded p-4">
-        <p className="font-bold text-lg mb-3">Login</p>
+        <p className="font-bold text-lg mb-3">Enter Your Password</p>
 
         <form className="grid gap-4 mt-2" onSubmit={handleSubmit}>
           <div className="grid gap-1">
-            <label htmlFor="email">Email: </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              autoFocus
-              value={data.email}
-              onChange={handleOnchange}
-              placeholder="Enter your Email"
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-orange-400"
-            />
-          </div>
-
-          <div className="grid gap-1">
-            <label htmlFor="password">Password: </label>
+            <label htmlFor="newPassword">New Password: </label>
 
             <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-orange-400">
               <input
                 type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                value={data.password}
+                id="newPassword"
+                name="newPassword"
+                value={data.newPassword}
                 onChange={handleOnchange}
                 placeholder="Enter your password"
                 className="w-full outline-none"
@@ -99,13 +102,32 @@ const LoginPage = () => {
                 {showPassword ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
               </div>
             </div>
+          </div>
 
-            <Link
-              to="/forgot-password"
-              className="block ml-auto hover:text-orange-500"
-            >
-              Forgot password
-            </Link>
+          <div className="grid gap-1">
+            <label htmlFor="confirmPassword">Confirm Password: </label>
+
+            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-orange-400">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                value={data.confirmPassword}
+                onChange={handleOnchange}
+                placeholder="Enter your confirm password"
+                className="w-full outline-none"
+              />
+              <div
+                onClick={() => setShowConfirmPassword((pre) => !pre)}
+                className="cursor-pointer"
+              >
+                {showConfirmPassword ? (
+                  <FaEye size={20} />
+                ) : (
+                  <FaEyeSlash size={20} />
+                )}
+              </div>
+            </div>
           </div>
 
           <button
@@ -116,17 +138,17 @@ const LoginPage = () => {
                 : "bg-gray-500"
             } text-white py-2 rounded font-semibold my-2 tracking-wide"`}
           >
-            Login
+            Reset Password
           </button>
         </form>
 
         <p>
-          Don't have account ?{" "}
+          Already have account ?{" "}
           <Link
-            to={"/register"}
+            to={"/login"}
             className="font-semibold text-orange-500 hover:text-orange-700"
           >
-            Register
+            Login
           </Link>
         </p>
       </div>
@@ -134,4 +156,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default ResetPassword;
