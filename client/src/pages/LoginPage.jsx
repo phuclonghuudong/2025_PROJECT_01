@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
 import toast from "react-hot-toast";
-import Axios from "../utils/Axios";
-import SummaryApi from "../common/SummaryApi";
-import AxiosToastError from "../utils/AxiosToastError";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import SummaryApi from "../common/SummaryApi";
+import { setUserDetails } from "../store/userSlice";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
+import fetchUserDetails from "../utils/fetchUserDetails";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -48,6 +52,10 @@ const LoginPage = () => {
           "refreshToken",
           response?.data?.data?.refreshToken
         );
+
+        const userDetails = await fetchUserDetails();
+        dispatch(setUserDetails(userDetails?.data?.data));
+
         setData({
           email: "",
           password: "",

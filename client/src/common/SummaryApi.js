@@ -25,6 +25,22 @@ const SummaryApi = {
     url: "/api/user/refresh-token",
     method: "post",
   },
+  user_details: {
+    url: "/api/user/user-details",
+    method: "get",
+  },
+  logout: {
+    url: "/api/user/logout",
+    method: "post",
+  },
+  uploadAvatar: {
+    url: "/api/user/update-avatar",
+    method: "put",
+  },
+  updateUserDetails: {
+    url: "/api/user/update-user",
+    method: "put",
+  },
 };
 
 export default SummaryApi;

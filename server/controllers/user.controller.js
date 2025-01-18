@@ -149,6 +149,10 @@ const loginController = async (request, response) => {
     const accessToken = await generateAccessToken(user?._id);
     const refreshToken = await generateRefreshToken(user?._id);
 
+    await UserModel.findByIdAndUpdate(user?._id, {
+      last_login_date: new Date(),
+    });
+
     const cookiesOption = {
       httpOnly: true,
       secure: true,
@@ -262,7 +266,7 @@ const updateUserDetails = async (request, response) => {
     );
 
     return response.json({
-      message: "Update user successfully",
+      message: "Update successfully",
       error: false,
       success: true,
       data: updateUser,
@@ -355,6 +359,12 @@ const verifyForgotPasswordOtp = async (request, response) => {
         .json({ message: "Invalid OTP", error: true, success: false });
     }
     //if otp == user?.forgot_password_otp
+
+    await UserModel.findByIdAndUpdate(user?._id, {
+      forgot_password_otp: "",
+      forgot_password_expiry: "",
+    });
+
     return response.json({
       message: "Verify OTP successfully",
       error: false,
@@ -470,6 +480,30 @@ const refreshTokenController = async (request, response) => {
   }
 };
 
+//get login user details
+const userDetails = async (request, response) => {
+  try {
+    const userId = request?.userId;
+
+    const user = await UserModel.findById(userId).select(
+      "-password, -refresh_token"
+    );
+
+    return response.json({
+      message: "User details.",
+      error: false,
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: "Something is wrong" || error,
+      error: true,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   registerUserController,
   verifyEmailController,
@@ -481,4 +515,5 @@ module.exports = {
   verifyForgotPasswordOtp,
   resetPasswordController,
   refreshTokenController,
+  userDetails,
 };

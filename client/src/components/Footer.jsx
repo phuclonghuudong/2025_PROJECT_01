@@ -11,16 +11,16 @@ const Footer = () => {
         <p>© All Rights Reserved 2025.</p>
 
         <div className="flex items-center gap-4 justify-center text-2xl">
-          <a href="" className="hover:text-yellow-300">
+          <a href="" className="hover:text-orange-500">
             <CiFacebook />
           </a>
-          <a href="" className="hover:text-yellow-300">
+          <a href="" className="hover:text-orange-500">
             <FaInstagram />
           </a>
-          <a href="" className="hover:text-yellow-300">
+          <a href="" className="hover:text-orange-500">
             <FaSquareYoutube />
           </a>
-          <a href="" className="hover:text-yellow-300">
+          <a href="" className="hover:text-orange-500">
             <FaTelegram />
           </a>
         </div>
