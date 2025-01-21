@@ -1,12 +1,12 @@
+import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { Toaster } from "react-hot-toast";
-import fetchUserDetails from "./utils/fetchUserDetails";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import Header from "./components/Header";
 import { setUserDetails } from "./store/userSlice";
+import fetchUserDetails from "./utils/fetchUserDetails";
 
 function App() {
   const dispatch = useDispatch();

@@ -1,17 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import Home from "../pages/Home";
-import SearchPage from "../pages/SearchPage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import ForgotPassword from "../pages/ForgotPassword";
-import OtpVerification from "../pages/OtpVerification";
-import ResetPassword from "../pages/ResetPassword";
-import UserMenuMobile from "../pages/UserMenuMobile";
 import Dashboard from "../layouts/Dashboard";
-import Profile from "../pages/Profile";
-import MyOrder from "../pages/MyOrder";
 import Address from "../pages/Address";
+import CategoryPage from "../pages/CategoryPage";
+import ForgotPassword from "../pages/ForgotPassword";
+import Home from "../pages/Home";
+import LoginPage from "../pages/LoginPage";
+import MyOrder from "../pages/MyOrder";
+import OtpVerification from "../pages/OtpVerification";
+import ProductPage from "../pages/ProductPage";
+import Profile from "../pages/Profile";
+import RegisterPage from "../pages/RegisterPage";
+import ResetPassword from "../pages/ResetPassword";
+import SearchPage from "../pages/SearchPage";
+import SubCategoryPage from "../pages/SubCategoryPage";
+import UploadProductPages from "../pages/UploadProductPages";
+import UserMenuMobile from "../pages/UserMenuMobile";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +69,22 @@ const router = createBrowserRouter([
           {
             path: "address",
             element: <Address />,
+          },
+          {
+            path: "category",
+            element: <CategoryPage />,
+          },
+          {
+            path: "subcategory",
+            element: <SubCategoryPage />,
+          },
+          {
+            path: "upload-product",
+            element: <UploadProductPages />,
+          },
+          {
+            path: "product",
+            element: <ProductPage />,
           },
         ],
       },

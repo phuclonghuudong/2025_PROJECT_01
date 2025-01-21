@@ -65,7 +65,7 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className="pl-4">
       <div className="w-20 h-20 bg-blue-500 flex justify-center rounded-full items-center overflow-hidden">
         {user?.avatar ? (
           <img src={user?.avatar} alt={user?.name} className="w-full h-full" />
