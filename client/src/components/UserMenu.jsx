@@ -7,6 +7,7 @@ import SummaryApi from "../common/SummaryApi";
 import { logout } from "../store/userSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
+import isAdmin from "../utils/isAdmin";
 import Divider from "./Divider";
 
 const UserMenu = ({ close }) => {
@@ -45,11 +46,14 @@ const UserMenu = ({ close }) => {
     }
   };
   return (
-    <div>
-      <div className="font-semibold">My Account</div>
+    <div className="">
+      <h2 className="font-semibold">My Account</h2>
       <div className="text-sm flex gap-2 items-center">
         <span className="max-w-52 text-ellipsis line-clamp-1">
           {user.name || user.mobile}{" "}
+          <span className="font-medium text-green-500">
+            {user.role === "ADMIN" ? "(Admin)" : ""}
+          </span>
         </span>
         <Link
           onClick={handleClose}
@@ -63,37 +67,45 @@ const UserMenu = ({ close }) => {
       <Divider />
 
       <div className="text-sm grid gap-2">
-        <Link
-          onClick={handleClose}
-          to={"/dashboard/category"}
-          className="px-2 hover:bg-orange-300 py-1"
-        >
-          Category
-        </Link>
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/category"}
+            className="px-2 hover:bg-orange-300 py-1"
+          >
+            Category
+          </Link>
+        )}
 
-        <Link
-          onClick={handleClose}
-          to={"/dashboard/subcategory"}
-          className="px-2 hover:bg-orange-300 py-1"
-        >
-          Sub Category
-        </Link>
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/subcategory"}
+            className="px-2 hover:bg-orange-300 py-1"
+          >
+            Sub Category
+          </Link>
+        )}
 
-        <Link
-          onClick={handleClose}
-          to={"/dashboard/upload-product"}
-          className="px-2 hover:bg-orange-300 py-1"
-        >
-          Upload Product
-        </Link>
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/upload-product"}
+            className="px-2 hover:bg-orange-300 py-1"
+          >
+            Upload Product
+          </Link>
+        )}
 
-        <Link
-          onClick={handleClose}
-          to={"/dashboard/product"}
-          className="px-2 hover:bg-orange-300 py-1"
-        >
-          Product
-        </Link>
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/product"}
+            className="px-2 hover:bg-orange-300 py-1"
+          >
+            Product
+          </Link>
+        )}
 
         <Link
           onClick={handleClose}

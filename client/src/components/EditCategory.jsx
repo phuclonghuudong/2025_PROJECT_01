@@ -5,11 +5,11 @@ import SummaryApi from "../common/SummaryApi";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import uploadImage from "../utils/UploadImage";
-
-const UploadCategoryModel = ({ close, fetchData }) => {
+const EditCategory = ({ close, fetchData, data: CategoryData }) => {
   const [data, setData] = useState({
-    name: "",
-    image: "",
+    _id: CategoryData._id,
+    name: CategoryData.name,
+    image: CategoryData.image,
   });
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +30,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     try {
       setLoading(true);
       const response = await Axios({
-        ...SummaryApi.addCategory,
+        ...SummaryApi.updateCategory,
         data: data,
       });
 
@@ -54,11 +54,12 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     if (!file) {
       return;
     }
-
+    setLoading(true);
     const response = await uploadImage(file);
 
     const { data: ImageResponse } = response;
 
+    setLoading(false);
     setData((pre) => {
       return {
         ...pre,
@@ -67,10 +68,10 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     });
   };
   return (
-    <section className="fixed flex-col top-0 bottom-0 left-0 right-0 bg-neutral-500 bg-opacity-50 flex items-center justify-center">
+    <section className="fixed flex-col top-0 bottom-0 left-0 right-0 bg-neutral-800 bg-opacity-50 flex items-center justify-center">
       <div className="bg-white max-w-4xl w-full p-4 rounded">
         <div className="flex items-center justify-between">
-          <h1 className="font-semibold">Category</h1>
+          <h1 className="font-semibold">Edit Category</h1>
           <button onClick={close} className="w-fit block ml-auto">
             <IoClose size={25} />
           </button>
@@ -112,7 +113,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
                       : "border border-blue-500 bg-blue-100 hover:bg-blue-500 "
                   } p-2 rounded cursor-pointer font-medium `}
                 >
-                  Upload Image
+                  {loading ? "Upload Image..." : "Upload Image"}
                 </div>
                 <input
                   disabled={!data.name}
@@ -132,7 +133,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
                 : "bg-gray-400"
             } py-2 rounded font-semibold cursor-pointer`}
           >
-            Add Category
+            Update Category
           </button>
         </form>
       </div>
@@ -140,4 +141,4 @@ const UploadCategoryModel = ({ close, fetchData }) => {
   );
 };
 
-export default UploadCategoryModel;
+export default EditCategory;

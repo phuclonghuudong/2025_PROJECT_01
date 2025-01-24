@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import logo from "../assets/logo.svg";
-import Search from "./Search";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { BsCart4 } from "react-icons/bs";
-import useMobile from "../hooks/useMobile";
+import { FaCaretDown, FaCaretUp, FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
-import { FaCaretDown, FaCaretUp } from "react-icons/fa6";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import useMobile from "../hooks/useMobile";
+import Search from "./Search";
 import UserMenu from "./UserMenu";
 
 const Header = () => {
@@ -91,7 +90,7 @@ const Header = () => {
                   </div>
                   {openUserMenu && (
                     <div className="absolute right-0 top-12">
-                      <div className="bg-white rounded p-4 min-w-40 lg:shadow-lg">
+                      <div className="bg-white rounded p-4 min-w-56 lg:shadow-lg">
                         <UserMenu close={handleCloseUserMenu} />
                       </div>
                     </div>

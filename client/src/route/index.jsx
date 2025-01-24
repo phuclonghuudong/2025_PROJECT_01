@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
+import AdminPermission from "../layouts/AdminPermission";
 import Dashboard from "../layouts/Dashboard";
 import Address from "../pages/Address";
 import CategoryPage from "../pages/CategoryPage";
@@ -72,19 +73,35 @@ const router = createBrowserRouter([
           },
           {
             path: "category",
-            element: <CategoryPage />,
+            element: (
+              <AdminPermission>
+                <CategoryPage />
+              </AdminPermission>
+            ),
           },
           {
             path: "subcategory",
-            element: <SubCategoryPage />,
+            element: (
+              <AdminPermission>
+                <SubCategoryPage />
+              </AdminPermission>
+            ),
           },
           {
             path: "upload-product",
-            element: <UploadProductPages />,
+            element: (
+              <AdminPermission>
+                <UploadProductPages />
+              </AdminPermission>
+            ),
           },
           {
             path: "product",
-            element: <ProductPage />,
+            element: (
+              <AdminPermission>
+                <ProductPage />
+              </AdminPermission>
+            ),
           },
         ],
       },
