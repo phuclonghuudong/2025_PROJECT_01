@@ -8,6 +8,7 @@ dotenv.config();
 const connectDB = require("./config/connectDB");
 const userRouter = require("./route/user.route.js");
 const categoryRouter = require("./route/category.route.js");
+const subCategoryRouter = require("./route/subCategory.route.js");
 const { uploadRouter } = require("./route/upload.route.js");
 
 const app = express();
@@ -36,6 +37,7 @@ app.get("/", (request, response) => {
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/file", uploadRouter);
+app.use("/api/subcategory", subCategoryRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {

@@ -3,9 +3,12 @@ import { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import "./App.css";
+import SummaryApi from "./common/SummaryApi";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { setAllCategory, setAllSubCategory } from "./store/productSlice";
 import { setUserDetails } from "./store/userSlice";
+import Axios from "./utils/Axios";
 import fetchUserDetails from "./utils/fetchUserDetails";
 
 function App() {
@@ -16,8 +19,41 @@ function App() {
     dispatch(setUserDetails(userData?.data?.data));
   };
 
+  const fetchCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(setAllCategory(responseData.data));
+      }
+    } catch (error) {
+    } finally {
+    }
+  };
+  const fetchSubCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getSubCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(setAllSubCategory(responseData.data));
+      }
+    } catch (error) {
+    } finally {
+    }
+  };
+
   useEffect(() => {
     fetchUser();
+    fetchCategory();
+    fetchSubCategory();
   }, []);
 
   return (

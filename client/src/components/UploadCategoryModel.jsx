@@ -54,10 +54,12 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     if (!file) {
       return;
     }
-
+    setLoading(true);
     const response = await uploadImage(file);
 
     const { data: ImageResponse } = response;
+
+    setLoading(false);
 
     setData((pre) => {
       return {
@@ -112,7 +114,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
                       : "border border-blue-500 bg-blue-100 hover:bg-blue-500 "
                   } p-2 rounded cursor-pointer font-medium `}
                 >
-                  Upload Image
+                  {loading ? "Upload Image...." : "Upload Image"}
                 </div>
                 <input
                   disabled={!data.name}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
 import ConfirmBox from "../components/ConfirmBox";
 import EditCategory from "../components/EditCategory";
@@ -22,6 +23,7 @@ const CategoryPage = () => {
   const [deleteCategory, setDeleteCategory] = useState({
     _id: "",
   });
+  const allCategory = useSelector((state) => state.product.allCategory);
 
   const fetchCategory = async () => {
     try {
@@ -44,8 +46,8 @@ const CategoryPage = () => {
   };
 
   useEffect(() => {
-    fetchCategory();
-  }, []);
+    setCategoryData(allCategory);
+  }, [allCategory]);
 
   const handleDeleteCategory = async () => {
     try {

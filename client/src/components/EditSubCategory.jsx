@@ -7,11 +7,12 @@ import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import uploadImage from "../utils/UploadImage";
 
-const UploadSubCategoryModel = ({ close, fetchData }) => {
+const EditSubCategory = ({ close, fetchData, data: SubCategoryData }) => {
   const [data, setData] = useState({
-    name: "",
-    image: "",
-    category: [],
+    _id: SubCategoryData._id,
+    name: SubCategoryData.name,
+    image: SubCategoryData.image,
+    category: SubCategoryData.category || [],
   });
   const [loading, setLoading] = useState(false);
   const allCategory = useSelector((state) => state.product.allCategory);
@@ -63,7 +64,7 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
     try {
       setLoading(true);
       const response = await Axios({
-        ...SummaryApi.addSubCategory,
+        ...SummaryApi.updateSubCategory,
         data: data,
       });
 
@@ -206,4 +207,4 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
   );
 };
 
-export default UploadSubCategoryModel;
+export default EditSubCategory;
