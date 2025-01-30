@@ -156,7 +156,7 @@ const SubCategoryPage = () => {
 
       {!data[0] && !loading && <NoData />}
 
-      <div className="">
+      <div className="overflow-auto">
         <DisplayTable data={data} columns={column} />
       </div>
 

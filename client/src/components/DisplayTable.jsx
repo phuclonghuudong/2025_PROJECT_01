@@ -37,7 +37,10 @@ const DisplayTable = ({ data, columns }) => {
             <tr key={row.id}>
               <td className="border px-2 py-0 ">{index + 1}</td>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border px-2 py-0">
+                <td
+                  key={cell.id}
+                  className="border px-2 py-0 whitespace-nowrap"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
