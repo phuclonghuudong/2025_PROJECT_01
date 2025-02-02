@@ -6,7 +6,12 @@ import "./App.css";
 import SummaryApi from "./common/SummaryApi";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { setAllCategory, setAllSubCategory } from "./store/productSlice";
+import {
+  setAllCategory,
+  setAllSubCategory,
+  setLoadingCategory,
+  setLoadingSubCategory,
+} from "./store/productSlice";
 import { setUserDetails } from "./store/userSlice";
 import Axios from "./utils/Axios";
 import fetchUserDetails from "./utils/fetchUserDetails";
@@ -21,6 +26,7 @@ function App() {
 
   const fetchCategory = async () => {
     try {
+      dispatch(setLoadingCategory(true));
       const response = await Axios({
         ...SummaryApi.getCategory,
       });
@@ -32,10 +38,12 @@ function App() {
       }
     } catch (error) {
     } finally {
+      dispatch(setLoadingCategory(false));
     }
   };
   const fetchSubCategory = async () => {
     try {
+      dispatch(setLoadingSubCategory(true));
       const response = await Axios({
         ...SummaryApi.getSubCategory,
       });
@@ -47,6 +55,7 @@ function App() {
       }
     } catch (error) {
     } finally {
+      dispatch(setLoadingSubCategory(false));
     }
   };
 

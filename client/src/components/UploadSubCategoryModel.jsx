@@ -72,6 +72,8 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
       if (responseData.success) {
         toast.success(responseData.message);
         close();
+      }
+      if (fetchData) {
         fetchData();
       }
     } catch (error) {

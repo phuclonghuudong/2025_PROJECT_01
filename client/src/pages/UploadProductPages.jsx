@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import ViewImage from "../components/ViewImage";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
+import SuccessAlert from "../utils/SuccessAlert";
 import uploadImage from "../utils/UploadImage";
 
 const UploadProductPages = () => {
@@ -116,7 +117,8 @@ const UploadProductPages = () => {
       const { data: responseProduct } = response;
 
       if (responseProduct?.success) {
-        toast.success(responseProduct?.message);
+        // toast.success(responseProduct?.message);
+        SuccessAlert(responseProduct?.message);
         setData({
           name: "",
           image: [],
@@ -140,6 +142,7 @@ const UploadProductPages = () => {
       setLoading(false);
     }
   };
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">

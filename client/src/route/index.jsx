@@ -9,6 +9,7 @@ import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import MyOrder from "../pages/MyOrder";
 import OtpVerification from "../pages/OtpVerification";
+import ProductAdmin from "../pages/ProductAdmin";
 import ProductPage from "../pages/ProductPage";
 import Profile from "../pages/Profile";
 import RegisterPage from "../pages/RegisterPage";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
         element: <UserMenuMobile />,
       },
       {
+        path: "product",
+        element: <ProductPage />,
+      },
+      {
         path: "dashboard",
         element: <Dashboard />,
         children: [
@@ -99,7 +104,7 @@ const router = createBrowserRouter([
             path: "product",
             element: (
               <AdminPermission>
-                <ProductPage />
+                <ProductAdmin />
               </AdminPermission>
             ),
           },
