@@ -10,7 +10,8 @@ import LoginPage from "../pages/LoginPage";
 import MyOrder from "../pages/MyOrder";
 import OtpVerification from "../pages/OtpVerification";
 import ProductAdmin from "../pages/ProductAdmin";
-import ProductPage from "../pages/ProductPage";
+import ProductDisplayPage from "../pages/ProductDisplayPage";
+import ProductListPage from "../pages/ProductListPage";
 import Profile from "../pages/Profile";
 import RegisterPage from "../pages/RegisterPage";
 import ResetPassword from "../pages/ResetPassword";
@@ -56,10 +57,7 @@ const router = createBrowserRouter([
         path: "user",
         element: <UserMenuMobile />,
       },
-      {
-        path: "product",
-        element: <ProductPage />,
-      },
+
       {
         path: "dashboard",
         element: <Dashboard />,
@@ -109,6 +107,19 @@ const router = createBrowserRouter([
             ),
           },
         ],
+      },
+      {
+        path: ":category",
+        children: [
+          {
+            path: ":subCategory",
+            element: <ProductListPage />,
+          },
+        ],
+      },
+      {
+        path: "product/:product",
+        element: <ProductDisplayPage />,
       },
     ],
   },

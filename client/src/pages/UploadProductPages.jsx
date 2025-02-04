@@ -157,6 +157,7 @@ const UploadProductPages = () => {
             </label>
             <input
               type="text"
+              autoFocus
               id="name"
               name="name"
               placeholder="Enter product name"

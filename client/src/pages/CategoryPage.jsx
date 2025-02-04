@@ -95,7 +95,7 @@ const CategoryPage = () => {
                 src={category.image}
                 className="w-full h-40 object-scale-down"
               />
-              <p className="py-2 px-2">{category.name}</p>
+              <p className="py-2 px-2 line-clamp-1">{category.name}</p>
               <div className=" justify-between items-center flex gap-2">
                 <button
                   onClick={() => {

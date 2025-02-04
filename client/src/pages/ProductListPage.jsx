@@ -3,7 +3,7 @@ import SummaryApi from "../common/SummaryApi";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 
-const ProductPage = () => {
+const ProductListPage = () => {
   const [productData, setProductData] = useState([]);
   const [page, setPage] = useState(1);
   const [loadingData, setLoadingData] = useState(false);
@@ -35,4 +35,4 @@ const ProductPage = () => {
   return <div>ProductPage Hello</div>;
 };
 
-export default ProductPage;
+export default ProductListPage;

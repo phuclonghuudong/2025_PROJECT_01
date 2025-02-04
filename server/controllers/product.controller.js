@@ -101,8 +101,37 @@ const getProductController = async (request, response) => {
       .json({ message: error.message || error, error: true, success: false });
   }
 };
+const getProductByCategory = async (request, response) => {
+  try {
+    const { id } = request.body;
+
+    if (!id) {
+      return response.status(400).json({
+        message: "Provide category id",
+        error: true,
+        success: false,
+      });
+    }
+
+    const product = await ProductModel.find({
+      category: { $in: id },
+    }).limit(15);
+
+    return response.json({
+      message: "Category product list",
+      error: false,
+      success: true,
+      data: product,
+    });
+  } catch (error) {
+    return response
+      .status(500)
+      .json({ message: error.message || error, error: true, success: false });
+  }
+};
 
 module.exports = {
   createProductController,
   getProductController,
+  getProductByCategory,
 };

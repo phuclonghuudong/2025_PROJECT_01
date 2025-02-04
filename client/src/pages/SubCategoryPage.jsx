@@ -154,11 +154,10 @@ const SubCategoryPage = () => {
         </button>
       </div>
 
-      {!data[0] && !loading && <NoData />}
-
       <div className="overflow-auto">
         <DisplayTable data={data} columns={column} />
       </div>
+      {!data[0] && !loading && <NoData />}
 
       {openUploadSubCategory && (
         <UploadSubCategoryModel
