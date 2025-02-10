@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import SummaryApi from "../common/SummaryApi";
 import Loading from "../components/Loading";
+import NoData from "../components/NoData";
 import ProductCartAdmin from "../components/ProductCartAdmin";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
@@ -89,41 +90,45 @@ const ProductAdmin = () => {
 
       {loadingData && <Loading />}
 
-      <div className="p-4 bg-blue-50">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 min-h-[60vh]">
-          {productData.map((p, index) => {
-            return <ProductCartAdmin data={p} key={index + "product"} />;
-          })}
-        </div>
+      {!productData[0] && !loadingData ? (
+        <NoData />
+      ) : (
+        <div className="p-4 bg-blue-50">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 min-h-[60vh]">
+            {productData.map((p, index) => {
+              return <ProductCartAdmin data={p} key={index + "product"} />;
+            })}
+          </div>
 
-        <div className="flex justify-between my-4">
-          <button
-            onClick={handlePrevious}
-            disabled={page <= 1 ? true : false}
-            className={
-              page <= 1
-                ? "bg-slate-500 px-4 py-1"
-                : "border border-yellow-400 px-4 py-1 hover:bg-yellow-400"
-            }
-          >
-            Previous
-          </button>
-          <button className="w-full bg-slate-100">
-            {page}/{totalNoPage}
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={page >= totalNoPage ? true : false}
-            className={
-              page >= totalNoPage
-                ? "bg-slate-500 px-4 py-1"
-                : "border border-yellow-400 px-4 py-1 hover:bg-yellow-400"
-            }
-          >
-            Next
-          </button>
+          <div className="flex justify-between my-4">
+            <button
+              onClick={handlePrevious}
+              disabled={page <= 1 ? true : false}
+              className={
+                page <= 1
+                  ? "bg-slate-500 px-4 py-1"
+                  : "border border-yellow-400 px-4 py-1 hover:bg-yellow-400"
+              }
+            >
+              Previous
+            </button>
+            <button className="w-full bg-slate-100">
+              {page}/{totalNoPage}
+            </button>
+            <button
+              onClick={handleNext}
+              disabled={page >= totalNoPage ? true : false}
+              className={
+                page >= totalNoPage
+                  ? "bg-slate-500 px-4 py-1"
+                  : "border border-yellow-400 px-4 py-1 hover:bg-yellow-400"
+              }
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 };

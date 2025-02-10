@@ -2,7 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Banner from "../assets/banner-1.webp";
+import Banner from "../assets/banner.jpg";
 import validURLConvert from "../utils/validURLConvert";
 import CategoryWiseProductDisplay from "./CategoryWiseProductDisplay";
 
@@ -12,7 +12,7 @@ const Home = () => {
   const subCategoryData = useSelector((state) => state.product.allSubCategory);
   const navigate = useNavigate();
 
-  const handleRedirectProductList = (id, cat) => {
+  const handleRedirectProductList = async (id, cat) => {
     const subCategoryId = subCategoryData.find((sub) => {
       const filterData = sub.category.some((c) => {
         return c._id == id;
@@ -20,7 +20,7 @@ const Home = () => {
       return filterData ? true : null;
     });
     if (!subCategoryId) {
-      toast.error("Category are updating");
+      toast.error("Category is updating");
       return;
     }
 
@@ -28,26 +28,24 @@ const Home = () => {
       subCategoryId?.name
     )}-${subCategoryId?._id}`;
 
-    navigate(url);
+    if (url) {
+      navigate(url);
+    }
   };
 
   return (
-    <section className="bg-white">
+    <section className="bg-white ">
       <div className="container mx-auto px-4">
         <div
           className={`w-full h-full bg-blue-100 rounded  ${
             !Banner && "animate-pulse "
           } `}
         >
-          <img
-            src={Banner}
-            className="w-full h-full object-scale-down"
-            alt="banner"
-          />
+          <img src={Banner} className="w-full h-full" alt="banner" />
         </div>
       </div>
 
-      <div className="container mx-auto px-4 my-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className="container mx-auto px-4 my-2 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2">
         {loadingCategory
           ? new Array(10).fill(null).map((c, index) => {
               return (
@@ -63,13 +61,14 @@ const Home = () => {
           : categoryData.map((cat, index) => {
               return (
                 <div
-                  className="w-full h-full"
-                  key={index + "categoryData"}
-                  onClick={() => handleRedirectProductList(cat._id, cat.name)}
+                  className="w-full h-full "
+                  key={index + "categoryData" + cat?._id}
+                  onClick={() => handleRedirectProductList(cat?._id, cat?.name)}
                 >
                   <div>
                     <img
                       src={cat?.image}
+                      alt="imageCategory"
                       className="w-full h-full object-scale-down"
                     />
                   </div>
@@ -78,7 +77,7 @@ const Home = () => {
             })}
       </div>
 
-      <div className="py-4">
+      <div className="py-4 ">
         {categoryData.map((c, index) => {
           return (
             <CategoryWiseProductDisplay

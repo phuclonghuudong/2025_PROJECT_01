@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
+import {
+  setAllSubCategory,
+  setLoadingSubCategory,
+} from "../store/productSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import uploadImage from "../utils/UploadImage";
@@ -15,6 +19,7 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
   });
   const [loading, setLoading] = useState(false);
   const allCategory = useSelector((state) => state.product.allCategory);
+  const dispatch = useDispatch();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -72,6 +77,7 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
       if (responseData.success) {
         toast.success(responseData.message);
         close();
+        fetchSubCategory();
       }
       if (fetchData) {
         fetchData();
@@ -82,6 +88,25 @@ const UploadSubCategoryModel = ({ close, fetchData }) => {
       setLoading(false);
     }
   };
+
+  const fetchSubCategory = async () => {
+    try {
+      dispatch(setLoadingSubCategory(true));
+      const response = await Axios({
+        ...SummaryApi.getSubCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(setAllSubCategory(responseData.data));
+      }
+    } catch (error) {
+    } finally {
+      dispatch(setLoadingSubCategory(false));
+    }
+  };
+
   return (
     <section className="fixed top-0 bottom-0 left-0 right-0 bg-neutral-800 z-50 bg-opacity-70 flex justify-center items-center ">
       <div className="w-full max-w-6xl bg-white p-4 rounded">

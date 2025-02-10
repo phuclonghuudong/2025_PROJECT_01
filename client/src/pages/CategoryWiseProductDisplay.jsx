@@ -55,34 +55,39 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
         </Link>
       </div>
 
-      <div
-        className="flex items-center gap-4 md:gap-6 lg:gap-8 container px-4 mx-auto md:overflow-x-scroll lg:overflow-hidden scroll-smooth "
-        ref={containerRef}
-      >
-        {loading &&
-          loadingCardNumber.map((_, index) => {
-            return <CardLoading key={index + "cardLoadingNumber"} />;
+      <div className="relative flex items-center">
+        <div
+          className="flex items-center gap-4 md:gap-6 lg:gap-8 container px-4 mx-auto overflow-x-scroll overflow-hidden scroll-smooth scrollbar-none"
+          ref={containerRef}
+        >
+          {loading &&
+            loadingCardNumber.map((_, index) => {
+              return <CardLoading key={index + "cardLoadingNumber"} />;
+            })}
+
+          {data.map((c, index) => {
+            return (
+              <CardProduct
+                data={c}
+                key={index + "categoryWiseProductDisplay"}
+              />
+            );
           })}
 
-        {data.map((c, index) => {
-          return (
-            <CardProduct data={c} key={index + "categoryWiseProductDisplay"} />
-          );
-        })}
-
-        <div className="w-full left-0 right-0 container mx-auto px-2 absolute hidden lg:flex justify-between items-center">
-          <button
-            onClick={handleScrollLeft}
-            className="z-10 relative bg-white shadow-lg p-2 rounded-full text-lg hover:bg-gray-200 "
-          >
-            <FaAngleLeft />
-          </button>
-          <button
-            onClick={handleScrollRight}
-            className="z-10 relative bg-white shadow-lg p-2 rounded-full text-lg hover:bg-gray-200"
-          >
-            <FaAngleRight />
-          </button>
+          <div className="w-full h-full left-0 right-0 container mx-auto px-2 absolute hidden lg:flex justify-between items-center scroll-smooth ">
+            <button
+              onClick={handleScrollLeft}
+              className="z-10 relative bg-white shadow-lg p-2 rounded-full text-lg hover:bg-gray-200 "
+            >
+              <FaAngleLeft />
+            </button>
+            <button
+              onClick={handleScrollRight}
+              className="z-10 relative bg-white shadow-lg p-2 rounded-full text-lg hover:bg-gray-200"
+            >
+              <FaAngleRight />
+            </button>
+          </div>
         </div>
       </div>
     </div>

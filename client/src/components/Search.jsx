@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { TypeAnimation } from "react-type-animation";
-import { FaArrowLeft } from "react-icons/fa6";
 import useMobile from "../hooks/useMobile";
 
 const Search = () => {
@@ -20,7 +20,7 @@ const Search = () => {
     navigate("/search");
   };
   return (
-    <div className="w-full min-w-[300px] lg:min-w-[420px] h-11 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-600 bg-slate-50 group focus-within:border-yellow-500">
+    <div className="w-full min-w-[220px] lg:min-w-[400px] h-11 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-600 bg-slate-50 group focus-within:border-yellow-500">
       <div>
         {isMobile && isSearchPage ? (
           <Link

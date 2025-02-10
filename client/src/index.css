@@ -9,5 +9,16 @@ body {
   font-weight: 100;
   font-style: normal;
 
-  @apply bg-blue-50 text-neutral-700;
+  @apply bg-blue-50 text-neutral-700 scroll-smooth;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbarCustom::-webkit-scrollbar {
+  width: 2px;
+  @apply bg-blue-50;
+}
+.scrollbarCustom::-webkit-scrollbar-thumb {
+  @apply bg-yellow-200 rounded-full;
 }

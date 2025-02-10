@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
+import { useDispatch } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
+import { setAllCategory, setLoadingCategory } from "../store/productSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import uploadImage from "../utils/UploadImage";
@@ -12,6 +14,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     image: "",
   });
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +43,7 @@ const UploadCategoryModel = ({ close, fetchData }) => {
         toast.success(responseData.message);
         close();
         fetchData();
+        fetchCategory();
       }
     } catch (error) {
       AxiosToastError(error);
@@ -67,6 +71,24 @@ const UploadCategoryModel = ({ close, fetchData }) => {
         image: ImageResponse.data.url,
       };
     });
+  };
+
+  const fetchCategory = async () => {
+    try {
+      dispatch(setLoadingCategory(true));
+      const response = await Axios({
+        ...SummaryApi.getCategory,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(setAllCategory(responseData.data));
+      }
+    } catch (error) {
+    } finally {
+      dispatch(setLoadingCategory(false));
+    }
   };
   return (
     <section className="fixed flex-col top-0 bottom-0 left-0 right-0 bg-neutral-500 bg-opacity-50 flex items-center justify-center">
@@ -108,16 +130,13 @@ const UploadCategoryModel = ({ close, fetchData }) => {
               </div>
               <label htmlFor="uploadCategoryImage">
                 <div
-                  className={`${
-                    !data.name
-                      ? "bg-gray-400"
-                      : "border border-blue-500 bg-blue-100 hover:bg-blue-500 "
-                  } p-2 rounded cursor-pointer font-medium `}
+                  className={`
+                      border border-blue-500 bg-blue-100 hover:bg-blue-500 
+                   p-2 rounded cursor-pointer font-medium `}
                 >
                   {loading ? "Upload Image...." : "Upload Image"}
                 </div>
                 <input
-                  disabled={!data.name}
                   onChange={handleUploadCategoryImage}
                   type="file"
                   id="uploadCategoryImage"

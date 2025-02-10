@@ -101,6 +101,7 @@ const getProductController = async (request, response) => {
       .json({ message: error.message || error, error: true, success: false });
   }
 };
+
 const getProductByCategory = async (request, response) => {
   try {
     const { id } = request.body;
@@ -130,8 +131,53 @@ const getProductByCategory = async (request, response) => {
   }
 };
 
+const getProductByCategoryAndSubCategory = async (request, response) => {
+  try {
+    const { categoryId, subCategoryId, page, limit } = request.body;
+
+    if (!categoryId || !subCategoryId) {
+      return response.status(400).json({
+        message: "Provide categoryId and subCategoryId",
+        error: true,
+        success: false,
+      });
+    }
+    if (!page) {
+      page = 2;
+    }
+    if (!limit) {
+      limit = 10;
+    }
+    const query = {
+      category: { $in: categoryId },
+      subCategory: { $in: subCategoryId },
+    };
+
+    const skip = (page - 1) * limit;
+
+    const [data, dataCount] = await Promise.all([
+      ProductModel.find(query).sort({ createAt: -1 }).skip(skip).limit(limit),
+      ProductModel.countDocuments(query),
+    ]);
+
+    return response.json({
+      message: "Product list",
+      error: false,
+      success: true,
+      data: data,
+      totalCount: dataCount,
+      limit: limit,
+      page: page,
+    });
+  } catch (error) {
+    return response
+      .status(500)
+      .json({ message: error.message || error, error: true, success: false });
+  }
+};
 module.exports = {
   createProductController,
   getProductController,
   getProductByCategory,
+  getProductByCategoryAndSubCategory,
 };

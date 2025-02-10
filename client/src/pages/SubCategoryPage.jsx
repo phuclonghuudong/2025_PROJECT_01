@@ -63,12 +63,12 @@ const SubCategoryPage = () => {
       header: "Image",
       cell: ({ row }) => {
         return (
-          <div className="flex justify-center items-center">
+          <div className="flex items-center justify-center">
             <img
               src={row?.original?.image}
               alt={row?.original?.name}
               onClick={() => setImageUrl(row?.original?.image)}
-              className="w-10 h-10 cursor-pointer"
+              className="w-10 h-10 cursor-pointer object-scale-down "
             />
           </div>
         );
@@ -141,6 +141,7 @@ const SubCategoryPage = () => {
     } finally {
     }
   };
+
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between">
