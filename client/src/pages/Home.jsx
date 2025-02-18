@@ -38,7 +38,7 @@ const Home = () => {
       <div className="container mx-auto px-4">
         <div
           className={`w-full h-full bg-blue-100 rounded  ${
-            !Banner && "animate-pulse "
+            !Banner && "animate-pulse my-2"
           } `}
         >
           <img src={Banner} className="w-full h-full" alt="banner" />
@@ -77,17 +77,15 @@ const Home = () => {
             })}
       </div>
 
-      <div className="py-4 ">
-        {categoryData.map((c, index) => {
-          return (
-            <CategoryWiseProductDisplay
-              key={c?._id + "categoryByProductDisplay"}
-              id={c?._id}
-              name={c?.name}
-            />
-          );
-        })}
-      </div>
+      {categoryData.map((c, index) => {
+        return (
+          <CategoryWiseProductDisplay
+            key={c?._id + "categoryByProductDisplay"}
+            id={c?._id}
+            name={c?.name}
+          />
+        );
+      })}
     </section>
   );
 };

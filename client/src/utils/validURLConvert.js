@@ -1,6 +1,6 @@
 const validURLConvert = (name) => {
   const url = name
-    .toString()
+    ?.toString()
     .replaceAll(" ", "-")
     .replaceAll(",", "-")
     .replaceAll("&", "-");

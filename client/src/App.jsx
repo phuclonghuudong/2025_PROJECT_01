@@ -6,6 +6,8 @@ import "./App.css";
 import SummaryApi from "./common/SummaryApi";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import GlobalProvider from "./provider/GlobalProvider";
+import { handleAddItemCart } from "./store/cartProduct";
 import {
   setAllCategory,
   setAllSubCategory,
@@ -58,6 +60,19 @@ function App() {
       dispatch(setLoadingSubCategory(false));
     }
   };
+  const fetchCartItem = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getCartItem,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(handleAddItemCart(responseData.data));
+      }
+    } catch (error) {}
+  };
 
   useEffect(() => {
     fetchUser();
@@ -66,14 +81,14 @@ function App() {
   }, []);
 
   return (
-    <>
+    <GlobalProvider>
       <Header />
       <main className="min-h-[76vh]">
         <Outlet />
       </main>
       <Footer />
       <Toaster />
-    </>
+    </GlobalProvider>
   );
 }
 

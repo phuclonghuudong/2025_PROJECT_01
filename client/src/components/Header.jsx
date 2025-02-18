@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { FaCaretDown, FaCaretUp, FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import useMobile from "../hooks/useMobile";
+import DisplayPriceInVND from "../utils/DisplayPriceInVND";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
@@ -13,7 +14,12 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  const cartItem = useSelector((state) => state.cartItem.cart);
   const [openUserMenu, setOpenUserMenu] = useState(false);
+  console.log(cartItem);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQty, setTotalQty] = useState(0);
 
   const isSearchPage = location?.pathname === "/search";
 
@@ -34,12 +40,26 @@ const Header = () => {
     navigate("/user");
   };
 
+  useEffect(() => {
+    const qty = cartItem.reduce((pre, curr) => {
+      return pre + curr.quantity;
+    }, 0);
+    setTotalQty(qty);
+
+    const tPrice = cartItem.reduce((pre, curr) => {
+      console.log("pre: ", pre);
+      console.log("curr: ", curr);
+      return pre + curr.quantity * curr.productId[0].price;
+    }, 0);
+    setTotalPrice(tPrice);
+  }, [cartItem]);
+
   return (
-    <header className="h-25 lg:h-20 lg:shadow-md sticky top-0 flex flex-col justify-center bg-white">
+    <header className="h-25 lg:h-20 lg:shadow-md sticky top-0 z-50 flex flex-col justify-center bg-white">
       {!(isMobile && isSearchPage) && (
         <div className="container mx-auto flex items-center px-2 justify-between">
           {/* Logo */}
-          <Link to={"/"} className="h-full">
+          <Link to={"/"} className="h-full flex justify-center items-center">
             <div className="h-full flex justify-center items-center">
               <img
                 className="hidden lg:block"
@@ -102,12 +122,19 @@ const Header = () => {
                 </button>
               )}
 
-              <button className="flex items-center gap-2 bg-orange-500 hover:bg-orange-700 px-2 py-2 rounded">
+              <button className="flex items-center gap-2 bg-green-500 hover:bg-green-200 px-4 py-2 rounded">
                 <div className="animate-bounce">
                   <BsCart4 size={26} />
                 </div>
                 <div className="font-semibold">
-                  <p>My Cart</p>
+                  {cartItem[0] ? (
+                    <div>
+                      <p>{totalQty} Items</p>
+                      <p>{DisplayPriceInVND(totalPrice)} </p>
+                    </div>
+                  ) : (
+                    <p>My Cart</p>
+                  )}
                 </div>
               </button>
             </div>

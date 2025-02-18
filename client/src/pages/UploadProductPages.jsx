@@ -416,7 +416,7 @@ const UploadProductPages = () => {
                   {a}
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id={a + index}
                   name={a + index}
                   placeholder={`Enter product ${a}`}

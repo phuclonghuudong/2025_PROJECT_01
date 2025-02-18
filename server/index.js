@@ -11,6 +11,7 @@ const categoryRouter = require("./route/category.route.js");
 const subCategoryRouter = require("./route/subCategory.route.js");
 const productRouter = require("./route/product.route.js");
 const { uploadRouter } = require("./route/upload.route.js");
+const cartRouter = require("./route/cart.route.js");
 
 const app = express();
 app.use(
@@ -40,6 +41,7 @@ app.use("/api/category", categoryRouter);
 app.use("/api/file", uploadRouter);
 app.use("/api/subcategory", subCategoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 connectDB().then(() => {
   app.listen(PORT, () => {

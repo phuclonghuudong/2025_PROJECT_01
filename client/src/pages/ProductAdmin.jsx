@@ -14,6 +14,7 @@ const ProductAdmin = () => {
   const [totalNoPage, setTotalNoPage] = useState(0);
   const [loadingData, setLoadingData] = useState(false);
   const [search, setSearch] = useState("");
+  const [countAllProduct, setCountAllProduct] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -58,7 +59,6 @@ const ProductAdmin = () => {
     setSearch(value);
     setPage(1);
   };
-
   useEffect(() => {
     let flag = true;
     const interval = setTimeout(() => {
@@ -72,10 +72,24 @@ const ProductAdmin = () => {
       clearTimeout(interval);
     };
   }, [search]);
+
+  const fetchCountAllProduct = async () => {
+    const countProduct = await Axios({
+      ...SummaryApi.countAllProduct,
+      data: "",
+    });
+    const { data: responseData } = countProduct;
+    if (responseData?.success) {
+      setCountAllProduct(responseData?.data);
+    }
+  };
+  useEffect(() => {
+    fetchCountAllProduct();
+  }, [countAllProduct, page]);
   return (
     <section>
       <div className="p-2 bg-white shadow-md flex items-center justify-between gap-2">
-        <h2 className="font-semibold">Product</h2>
+        <h2 className="font-semibold">Product {countAllProduct}</h2>
         <div className="h-full w-full bg-blue-50 flex justify-between items-center gap-2 py-1 px-2 rounded border focus-within:border-yellow-400  min-w-24 max-w-48">
           <FaSearch size={25} />
           <input
@@ -93,10 +107,17 @@ const ProductAdmin = () => {
       {!productData[0] && !loadingData ? (
         <NoData />
       ) : (
-        <div className="p-4 bg-blue-50">
+        <div className="p-2 bg-blue-50">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 min-h-[60vh]">
             {productData.map((p, index) => {
-              return <ProductCartAdmin data={p} key={index + "product"} />;
+              return (
+                <ProductCartAdmin
+                  fetchData={fetchData}
+                  countData={fetchCountAllProduct}
+                  data={p}
+                  key={index + "product"}
+                />
+              );
             })}
           </div>
 

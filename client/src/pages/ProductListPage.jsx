@@ -73,7 +73,7 @@ const ProductListPage = () => {
     <section className=" top-24 lg:top-20">
       <div className="container mx-auto top-24 grid grid-cols-[90px,1fr] md:grid-cols-[150px,1fr] lg:grid-cols-[200px,1fr] ">
         {/* sub category */}
-        <div className=" min-h-[79vh] max-h-[79vh]  grid gap-1 shadow-md overflow-y-scroll scrollbarCustom py-2 bg-white">
+        <div className=" min-h-[79vh] max-h-[85vh]  grid gap-1 shadow-md overflow-y-scroll scrollbarCustom py-2 bg-white">
           {DisplaySubCategory.map((c, index) => {
             const link = "";
             const url = `/${validURLConvert(c?.category[0]?.name)}-${
@@ -104,14 +104,16 @@ const ProductListPage = () => {
 
         {/* product */}
         <div className="">
-          <div className="bg-white shadow-md p-2">
+          <div className="bg-white shadow-md p-4">
             <h3 className="font-semibold">{categoryName}</h3>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-2 ">
-            {data.map((p, index) => {
-              return <CardProduct data={p} key={p._id + "product" + index} />;
-            })}
+          <div className="min-h-[79vh] max-h-[79vh] overflow-y-auto ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 p-2 gap-2 ">
+              {data.map((p, index) => {
+                return <CardProduct data={p} key={p._id + "product" + index} />;
+              })}
+            </div>
           </div>
           {loading && <Loading />}
         </div>
