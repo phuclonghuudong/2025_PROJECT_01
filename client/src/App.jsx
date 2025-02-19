@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import SummaryApi from "./common/SummaryApi";
+import CartMobileLink from "./components/CartMobileLink";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import GlobalProvider from "./provider/GlobalProvider";
@@ -88,6 +89,7 @@ function App() {
       </main>
       <Footer />
       <Toaster />
+      <CartMobileLink />
     </GlobalProvider>
   );
 }

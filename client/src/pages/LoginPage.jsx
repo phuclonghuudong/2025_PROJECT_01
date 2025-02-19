@@ -4,6 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SummaryApi from "../common/SummaryApi";
+import { handleAddItemCart } from "../store/cartProduct";
 import { setUserDetails } from "../store/userSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
@@ -55,6 +56,7 @@ const LoginPage = () => {
 
         const userDetails = await fetchUserDetails();
         dispatch(setUserDetails(userDetails?.data?.data));
+        fetchCartItem();
 
         setData({
           email: "",
@@ -65,6 +67,20 @@ const LoginPage = () => {
     } catch (error) {
       AxiosToastError(error);
     }
+  };
+
+  const fetchCartItem = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getCartItem,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(handleAddItemCart(responseData.data));
+      }
+    } catch (error) {}
   };
 
   return (

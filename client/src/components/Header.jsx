@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsCart4 } from "react-icons/bs";
 import { FaCaretDown, FaCaretUp, FaRegCircleUser } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import useMobile from "../hooks/useMobile";
+import { userGlobalContext } from "../provider/GlobalProvider";
 import DisplayPriceInVND from "../utils/DisplayPriceInVND";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
@@ -16,10 +17,8 @@ const Header = () => {
   const user = useSelector((state) => state.user);
   const cartItem = useSelector((state) => state.cartItem.cart);
   const [openUserMenu, setOpenUserMenu] = useState(false);
-  console.log(cartItem);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQty, setTotalQty] = useState(0);
+  const { totalPrice, totalQty } = userGlobalContext();
 
   const isSearchPage = location?.pathname === "/search";
 
@@ -39,20 +38,6 @@ const Header = () => {
 
     navigate("/user");
   };
-
-  useEffect(() => {
-    const qty = cartItem.reduce((pre, curr) => {
-      return pre + curr.quantity;
-    }, 0);
-    setTotalQty(qty);
-
-    const tPrice = cartItem.reduce((pre, curr) => {
-      console.log("pre: ", pre);
-      console.log("curr: ", curr);
-      return pre + curr.quantity * curr.productId[0].price;
-    }, 0);
-    setTotalPrice(tPrice);
-  }, [cartItem]);
 
   return (
     <header className="h-25 lg:h-20 lg:shadow-md sticky top-0 z-50 flex flex-col justify-center bg-white">

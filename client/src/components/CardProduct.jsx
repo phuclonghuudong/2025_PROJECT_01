@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import SummaryApi from "../common/SummaryApi";
-import { userGlobalContext } from "../provider/GlobalProvider";
-import Axios from "../utils/Axios";
-import AxiosToastError from "../utils/AxiosToastError";
 import DisplayPriceInVND from "../utils/DisplayPriceInVND";
 import { PriceWithDiscount } from "../utils/PriceWithDiscount";
 import validURLConvert from "../utils/validURLConvert";
+import AddToCartButton from "./AddToCartButton";
 
 const CardProduct = ({ data }) => {
   const navigate = useNavigate();
@@ -18,35 +14,6 @@ const CardProduct = ({ data }) => {
     }
   };
   const [loading, setLoading] = useState(false);
-  const { fetchCartItem } = userGlobalContext();
-
-  const handleADDToCart = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    try {
-      setLoading(true);
-      const response = await Axios({
-        ...SummaryApi.addToCart,
-        data: {
-          productId: data?._id,
-        },
-      });
-
-      const { data: responseData } = response;
-
-      if (responseData?.success) {
-        toast.success(responseData?.message);
-        if (fetchCartItem) {
-          fetchCartItem();
-        }
-      }
-    } catch (error) {
-      AxiosToastError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <Link
@@ -85,12 +52,7 @@ const CardProduct = ({ data }) => {
           {DisplayPriceInVND(PriceWithDiscount(data?.price, data?.discount))}
         </div>
         <div className="">
-          <button
-            onClick={handleADDToCart}
-            className="bg-green-500 hover:bg-green-700 text-white px-4 rounded"
-          >
-            Add
-          </button>
+          <AddToCartButton data={data} />
         </div>
       </div>
     </Link>

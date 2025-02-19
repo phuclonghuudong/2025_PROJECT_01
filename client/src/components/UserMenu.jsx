@@ -4,6 +4,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SummaryApi from "../common/SummaryApi";
+import { handleAddItemCart } from "../store/cartProduct";
 import { logout } from "../store/userSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
@@ -20,9 +21,12 @@ const UserMenu = ({ close }) => {
       const response = await Axios({
         ...SummaryApi.logout,
       });
+      console.log(response);
 
       if (response?.data?.success) {
         toast.success(response?.data?.message);
+        dispatch(handleAddItemCart(""));
+
         dispatch(logout());
         localStorage.clear();
         window.history.back();
@@ -45,6 +49,7 @@ const UserMenu = ({ close }) => {
       close();
     }
   };
+
   return (
     <div className="">
       <h2 className="font-semibold">My Account</h2>

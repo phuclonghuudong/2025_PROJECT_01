@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import SummaryApi from "../common/SummaryApi";
+import AddToCartButton from "../components/AddToCartButton";
 import Divider from "../components/Divider";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
@@ -169,11 +170,9 @@ const ProductDisplayPage = () => {
             </div>
           </div>
         </div>
-
-        <button className="my-4 px-4 py-1 bg-green-500 hover:bg-green-600 text-white rounded">
-          {" "}
-          Add
-        </button>
+        <div className="my-4 ">
+          <AddToCartButton data={data} />
+        </div>{" "}
         <Divider />
       </div>
     </section>

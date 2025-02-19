@@ -71,8 +71,64 @@ const getCartItemController = async (request, response) => {
       .json({ message: error.message || error, error: true, success: false });
   }
 };
+const updateCartItemQtyController = async (request, response) => {
+  try {
+    const userId = request.userId;
+
+    const { _id, qty } = request.body;
+
+    if (!_id || !qty) {
+      return response
+        .status(400)
+        .json({ message: "Provide _id, qty", error: true, success: false });
+    }
+    const update = await CartProductModel.updateOne(
+      { _id: _id },
+      { quantity: qty }
+    );
+
+    return response.json({
+      message: "Item added",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response
+      .status(500)
+      .json({ message: error.message || error, error: true, success: false });
+  }
+};
+const deleteCartItemQtyController = async (request, response) => {
+  try {
+    const userId = request.userId;
+    const { _id } = request.body;
+
+    if (!_id) {
+      return response
+        .status(400)
+        .json({ message: "Provide _id", error: true, message: false });
+    }
+
+    const delItem = await CartProductModel.deleteOne({
+      _id: _id,
+      userId: userId,
+    });
+
+    return response.json({
+      message: "Item remove",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response
+      .status(500)
+      .json({ message: error?.message || error, error: true, success: false });
+  }
+};
 
 module.exports = {
   addToCartItemController,
   getCartItemController,
+  updateCartItemQtyController,
+  deleteCartItemQtyController,
 };
