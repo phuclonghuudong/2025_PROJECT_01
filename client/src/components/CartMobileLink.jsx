@@ -8,7 +8,6 @@ import DisplayPriceInVND from "../utils/DisplayPriceInVND";
 const CartMobileLink = () => {
   const { totalQty, totalPrice } = userGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);
-  console.log(cartItem);
 
   return (
     <>

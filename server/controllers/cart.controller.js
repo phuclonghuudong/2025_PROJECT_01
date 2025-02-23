@@ -88,7 +88,7 @@ const updateCartItemQtyController = async (request, response) => {
     );
 
     return response.json({
-      message: "Item added",
+      message: "Update Cart!",
       error: false,
       success: true,
     });

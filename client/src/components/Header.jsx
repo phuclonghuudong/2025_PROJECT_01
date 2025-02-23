@@ -7,6 +7,7 @@ import logo from "../assets/logo.svg";
 import useMobile from "../hooks/useMobile";
 import { userGlobalContext } from "../provider/GlobalProvider";
 import DisplayPriceInVND from "../utils/DisplayPriceInVND";
+import DisplayCartItem from "./DisplayCartItem";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
@@ -19,6 +20,7 @@ const Header = () => {
   const [openUserMenu, setOpenUserMenu] = useState(false);
 
   const { totalPrice, totalQty } = userGlobalContext();
+  const [openCartSection, setOpenCartSection] = useState(false);
 
   const isSearchPage = location?.pathname === "/search";
 
@@ -107,11 +109,14 @@ const Header = () => {
                 </button>
               )}
 
-              <button className="flex items-center gap-2 bg-green-500 hover:bg-green-200 px-4 py-2 rounded">
+              <button
+                onClick={() => setOpenCartSection((pre) => !pre)}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-200 px-4 py-2 rounded"
+              >
                 <div className="animate-bounce">
                   <BsCart4 size={26} />
                 </div>
-                <div className="font-semibold">
+                <div className="font-semibold text-sm">
                   {cartItem[0] ? (
                     <div>
                       <p>{totalQty} Items</p>
@@ -129,6 +134,9 @@ const Header = () => {
       <div className="container mx-auto px-2 py-2 lg:hidden">
         <Search />
       </div>
+      {openCartSection && (
+        <DisplayCartItem close={() => setOpenCartSection(false)} />
+      )}
     </header>
   );
 };
