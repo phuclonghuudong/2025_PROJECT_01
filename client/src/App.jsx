@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import "./App.css";
 import SummaryApi from "./common/SummaryApi";
@@ -21,10 +21,16 @@ import fetchUserDetails from "./utils/fetchUserDetails";
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   const fetchUser = async () => {
-    const userData = await fetchUserDetails();
-    dispatch(setUserDetails(userData?.data?.data));
+    const response = await fetchUserDetails();
+    if (response) {
+      const { data: responseData } = response;
+      if (responseData?.success) {
+        dispatch(setUserDetails(responseData?.data));
+      }
+    }
   };
 
   const fetchCategory = async () => {
@@ -37,7 +43,7 @@ function App() {
       const { data: responseData } = response;
 
       if (responseData.success) {
-        dispatch(setAllCategory(responseData.data));
+        dispatch(setAllCategory(responseData?.data));
       }
     } catch (error) {
     } finally {
@@ -70,7 +76,7 @@ function App() {
       const { data: responseData } = response;
 
       if (responseData.success) {
-        dispatch(handleAddItemCart(responseData.data));
+        dispatch(handleAddItemCart(responseData?.data));
       }
     } catch (error) {}
   };

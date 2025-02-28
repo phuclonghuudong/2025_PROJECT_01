@@ -1,8 +1,9 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FaHandPointRight } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import EMPTY_CART from "../assets/empty-cart.webp";
 import { userGlobalContext } from "../provider/GlobalProvider";
 import DisplayPriceInVND from "../utils/DisplayPriceInVND";
@@ -11,8 +12,21 @@ import validURLConvert from "../utils/validURLConvert";
 import AddToCartButton from "./AddToCartButton";
 
 const DisplayCartItem = ({ close }) => {
-  const { notDiscountTotalPrice, totalPrice } = userGlobalContext();
+  const { notDiscountTotalPrice, totalPrice, totalQty } = userGlobalContext();
   const cartItem = useSelector((state) => state.cartItem.cart);
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const redirectToCheckoutPage = () => {
+    if (user?._id) {
+      navigate("/checkout");
+      if (close) {
+        close();
+      }
+      return;
+    }
+    toast("Please Login");
+  };
   return (
     <section className="bg-neutral-600 fixed top-0 left-0 bottom-0 right-0 bg-opacity-70 z-50">
       <div className="bg-white w-full max-w-sm min-h-screen max-h-screen ml-auto">
@@ -27,7 +41,7 @@ const DisplayCartItem = ({ close }) => {
         </div>
 
         {cartItem[0] ? (
-          <div className="min-h-[75vh] lg:min-h-[80vh] h-full max-h-[calc(100vh-120px)] bg-blue-50 p-2 flex flex-col gap-2">
+          <div className="min-h-[75vh] lg:min-h-[80vh] h-full max-h-[calc(100vh-120px)] bg-blue-50 p-2 flex flex-col gap-2 text-xs">
             <div className="flex items-center px-4 py-2 bg-blue-100 text-blue-500 rounded-full justify-between">
               <p>Your total savings</p>
               <p>{DisplayPriceInVND(notDiscountTotalPrice - totalPrice)}</p>
@@ -79,6 +93,33 @@ const DisplayCartItem = ({ close }) => {
                   );
                 })}
             </div>
+
+            <div className="bg-white p-4">
+              <h3 className="font-semibold">Bill details</h3>
+              <div className="flex justify-between ml-1 py-1">
+                <p>Items total</p>
+                <p className="flex items-center gap-2">
+                  <span className="line-through text-slate-400">
+                    {DisplayPriceInVND(notDiscountTotalPrice)}
+                  </span>
+                  <span>{DisplayPriceInVND(totalPrice)}</span>
+                </p>
+              </div>
+              <div className="flex justify-between ml-1 py-1">
+                <p>Quantity total</p>
+                <p className="flex items-center gap-2">{totalQty} item</p>
+              </div>
+              <div className="flex justify-between ml-1 py-1">
+                <p>Delivery Charge</p>
+                <p className="flex items-center gap-2">Free</p>
+              </div>
+              <div className="font-semibold flex items-center justify-between">
+                <p>Grand total</p>
+                <p className="flex items-center gap-2">
+                  <span className="">{DisplayPriceInVND(totalPrice)}</span>
+                </p>
+              </div>
+            </div>
           </div>
         ) : (
           ""
@@ -88,7 +129,10 @@ const DisplayCartItem = ({ close }) => {
           {cartItem[0] ? (
             <div className="bg-green-700 text-neutral-100 px-4 font-bold text-base py-4 static bottom-3 rounded flex items-center gap-4 justify-between">
               <div>{DisplayPriceInVND(totalPrice)}</div>
-              <button className="flex items-center gap-2">
+              <button
+                onClick={redirectToCheckoutPage}
+                className="flex items-center gap-2"
+              >
                 PROCEED
                 <span>
                   <FaHandPointRight className="text-yellow-500" />

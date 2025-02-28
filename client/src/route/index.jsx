@@ -3,7 +3,10 @@ import App from "../App";
 import AdminPermission from "../layouts/AdminPermission";
 import Dashboard from "../layouts/Dashboard";
 import Address from "../pages/Address";
+import Cancel from "../pages/Cancel";
+import CartMobile from "../pages/CartMobile";
 import CategoryPage from "../pages/CategoryPage";
+import CheckoutPage from "../pages/CheckoutPage";
 import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
@@ -17,6 +20,7 @@ import RegisterPage from "../pages/RegisterPage";
 import ResetPassword from "../pages/ResetPassword";
 import SearchPage from "../pages/SearchPage";
 import SubCategoryPage from "../pages/SubCategoryPage";
+import Success from "../pages/Success";
 import UploadProductPages from "../pages/UploadProductPages";
 import UserMenuMobile from "../pages/UserMenuMobile";
 
@@ -120,6 +124,22 @@ const router = createBrowserRouter([
       {
         path: "product/:product",
         element: <ProductDisplayPage />,
+      },
+      {
+        path: "cart",
+        element: <CartMobile />,
+      },
+      {
+        path: "cancel",
+        element: <Cancel />,
+      },
+      {
+        path: "success",
+        element: <Success />,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
       },
     ],
   },

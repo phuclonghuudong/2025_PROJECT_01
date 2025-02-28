@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
+import { handleAddress } from "../store/addressSlice";
 import { handleAddItemCart } from "../store/cartProduct";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
@@ -15,6 +16,7 @@ const GlobalProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQty, setTotalQty] = useState(0);
   const cartItem = useSelector((state) => state.cartItem.cart);
+  const user = useSelector((state) => state.user);
   const [notDiscountTotalPrice, setNotDiscountTotalPrice] = useState(0);
 
   const fetchCartItem = async () => {
@@ -75,9 +77,25 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
+  const fetchAddress = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getAddress,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData.success) {
+        dispatch(handleAddress(responseData.data));
+      }
+    } catch (error) {}
+  };
   useEffect(() => {
-    fetchCartItem();
-  }, []);
+    if (user?._id) {
+      fetchCartItem();
+      fetchAddress();
+    }
+  }, [user]);
 
   useEffect(() => {
     const qty = cartItem.reduce((pre, curr) => {
@@ -104,6 +122,7 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         fetchCartItem,
+        fetchAddress,
         updateCartItem,
         deleteCartItem,
         totalPrice,

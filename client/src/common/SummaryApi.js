@@ -129,6 +129,30 @@ const SummaryApi = {
     url: "/api/cart/delete-cart-item",
     method: "delete",
   },
+  createAddress: {
+    url: "/api/address/create",
+    method: "post",
+  },
+  getAddress: {
+    url: "/api/address/get",
+    method: "get",
+  },
+  deleteAddress: {
+    url: "/api/address/disabled",
+    method: "delete",
+  },
+  updateAddress: {
+    url: "/api/address/update",
+    method: "put",
+  },
+  CashOnDeliveryOrder: {
+    url: "/api/order/cash-on-delivery",
+    method: "post",
+  },
+  paymentURL: {
+    url: "/api/order/checkout",
+    method: "post",
+  },
 };
 
 export default SummaryApi;

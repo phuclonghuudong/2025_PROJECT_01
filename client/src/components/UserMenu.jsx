@@ -21,11 +21,10 @@ const UserMenu = ({ close }) => {
       const response = await Axios({
         ...SummaryApi.logout,
       });
-      console.log(response);
 
       if (response?.data?.success) {
         toast.success(response?.data?.message);
-        dispatch(handleAddItemCart(""));
+        dispatch(handleAddItemCart([]));
 
         dispatch(logout());
         localStorage.clear();
