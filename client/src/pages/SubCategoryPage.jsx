@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
 import ConfirmBox from "../components/ConfirmBox";
 import DisplayTable from "../components/DisplayTable";
-import EditSubCategory from "../components/EditSubcategory";
+import EditSubCategory from "../components/EditSubCategory";
 import NoData from "../components/NoData";
 import UploadSubCategoryModel from "../components/UploadSubCategoryModel";
 import ViewImage from "../components/ViewImage";
