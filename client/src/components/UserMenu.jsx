@@ -4,6 +4,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import SummaryApi from "../common/SummaryApi";
+import { userGlobalContext } from "../provider/GlobalProvider";
 import { handleAddItemCart } from "../store/cartProduct";
 import { logout } from "../store/userSlice";
 import Axios from "../utils/Axios";
@@ -12,6 +13,7 @@ import isAdmin from "../utils/isAdmin";
 import Divider from "./Divider";
 
 const UserMenu = ({ close }) => {
+  const { fetchCartItem, fetchAddress, fetchOrder } = userGlobalContext();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,14 +30,21 @@ const UserMenu = ({ close }) => {
 
         dispatch(logout());
         localStorage.clear();
-        window.history.back();
-        navigate("/");
+
+        if (fetchAddress) {
+          fetchAddress();
+        }
+        if (fetchCartItem) {
+          fetchCartItem();
+        }
+        if (fetchOrder) {
+          fetchOrder();
+        }
+        // window.history.back();
         if (close) {
           close();
         }
-      }
-      if (response?.data?.error) {
-        toast.error(response?.data?.message);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SummaryApi from "../common/SummaryApi";
 import { handleAddress } from "../store/addressSlice";
 import { handleAddItemCart } from "../store/cartProduct";
+import { setOrder } from "../store/orderSlice";
 import Axios from "../utils/Axios";
 import AxiosToastError from "../utils/AxiosToastError";
 import { PriceWithDiscount } from "../utils/PriceWithDiscount";
@@ -27,8 +28,8 @@ const GlobalProvider = ({ children }) => {
 
       const { data: responseData } = response;
 
-      if (responseData.success) {
-        dispatch(handleAddItemCart(responseData.data));
+      if (responseData?.success) {
+        dispatch(handleAddItemCart(responseData?.data));
       }
     } catch (error) {}
   };
@@ -66,7 +67,7 @@ const GlobalProvider = ({ children }) => {
       });
       const { data: responseData } = response;
 
-      if (responseData.success) {
+      if (responseData?.success) {
         fetchCartItem();
         // toast.success(responseData.message);
         return responseData;
@@ -85,15 +86,31 @@ const GlobalProvider = ({ children }) => {
 
       const { data: responseData } = response;
 
-      if (responseData.success) {
-        dispatch(handleAddress(responseData.data));
+      if (responseData?.success) {
+        dispatch(handleAddress(responseData?.data));
       }
     } catch (error) {}
   };
+
+  const fetchOrder = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getOrderItems,
+      });
+
+      const { data: responseData } = response;
+
+      if (responseData?.success) {
+        dispatch(setOrder(responseData?.data));
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
     if (user?._id) {
       fetchCartItem();
       fetchAddress();
+      fetchOrder();
     }
   }, [user]);
 
@@ -123,6 +140,7 @@ const GlobalProvider = ({ children }) => {
       value={{
         fetchCartItem,
         fetchAddress,
+        fetchOrder,
         updateCartItem,
         deleteCartItem,
         totalPrice,

@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import UserMenu from "../components/UserMenu";
+import { userGlobalContext } from "../provider/GlobalProvider";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);
+  const { fetchCartItem, fetchAddress, fetchOrder } = userGlobalContext();
+
+  useEffect(() => {
+    if (user?._id && user?._id !== "") {
+      fetchCartItem();
+      fetchAddress();
+      fetchOrder();
+    }
+  }, [user]);
 
   return (
     <section className="bg-white">

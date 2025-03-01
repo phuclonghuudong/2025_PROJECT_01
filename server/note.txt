@@ -1,0 +1,13 @@
+FRONTEND_URL = "http://localhost:5173"
+MONGOOSE_URI = mongodb+srv://2025_project:301688831@cluster0.ex3vj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+RESEND_API = re_8wPgiGtV_MejgmT8yRhfDcN8kwad9diic
+SECRET_KEY_ACCESS_TOKEN = asdadanfhsafdaklsfhjshdfasdsalfhlas123132312jhhasldha
+SECRET_KEY_REFRESH_TOKEN = AJSDHAJDSADSAJ123132HASDJASHDSDHJADH
+
+CLOUDINARY_CLOUD_NAME = dqywxoayz
+CLOUDINARY_API_KEY = 185295964679189
+CLOUDINARY_API_SECRET = NpLPze8Ddo56JYDufODmTHquz94
+
+STRIPE_SECRET_KEY = sk_test_51QxMOlFFkhzNhWHuBO5SX9temt5MsPiruEvndITtk6Nd2HG7hiU2ajobOdQfcUqJ1kfGRLUtiIP4K6t1yGAqhw5Q00RBVLGDoe
+STRIPE_ENDPOINT_WEBHOOK_SECRET_KEY = whsec_2d9a3b51f06b53f09d4b9df195270aec04394cfa6668edc246a2be64d8b22402
+                                     

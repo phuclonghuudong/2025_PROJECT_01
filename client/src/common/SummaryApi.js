@@ -1,4 +1,4 @@
-export const baseURl = "http://localhost:2410";
+export const baseURl = import.meta.env.VITE_BASE_URL;
 
 const SummaryApi = {
   register: {
@@ -152,6 +152,10 @@ const SummaryApi = {
   paymentURL: {
     url: "/api/order/checkout",
     method: "post",
+  },
+  getOrderItems: {
+    url: "/api/order/order-list",
+    method: "get",
   },
 };
 

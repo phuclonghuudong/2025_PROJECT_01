@@ -1,5 +1,5 @@
 import React from "react";
-import ImageNoData from "../assets/6763427.webp";
+import ImageNoData from "../assets/empty-cart.webp";
 
 const NoData = () => {
   return (

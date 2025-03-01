@@ -45,9 +45,9 @@ const userSlice = createSlice({
       state.verify_email = "";
       state.last_login_date = "";
       state.status = "tus";
-      state.address_details = "";
-      state.shopping_cart = "";
-      state.orderHistory = "";
+      state.address_details = [];
+      state.shopping_cart = [];
+      state.orderHistory = [];
       state.role = "";
     },
   },

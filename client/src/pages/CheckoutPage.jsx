@@ -12,8 +12,13 @@ import AxiosToastError from "../utils/AxiosToastError";
 import DisplayPriceInVND from "../utils/DisplayPriceInVND";
 
 const CheckoutPage = () => {
-  const { notDiscountTotalPrice, totalPrice, totalQty, fetchCartItem } =
-    userGlobalContext();
+  const {
+    notDiscountTotalPrice,
+    totalPrice,
+    totalQty,
+    fetchCartItem,
+    fetchOrder,
+  } = userGlobalContext();
   const [openAddress, setOpenAddress] = useState(false);
   const [selectAddress, setSelectAddress] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -44,6 +49,9 @@ const CheckoutPage = () => {
 
         if (fetchCartItem) {
           fetchCartItem();
+        }
+        if (fetchOrder) {
+          fetchOrder();
         }
         navigate("/success", {
           state: {
@@ -76,6 +84,13 @@ const CheckoutPage = () => {
       const { data: responseData } = response;
 
       stripePromise.redirectToCheckout({ sessionId: responseData.id });
+
+      if (fetchCartItem) {
+        fetchCartItem();
+      }
+      if (fetchOrder) {
+        fetchOrder();
+      }
     } catch (error) {
       AxiosToastError(error);
     }

@@ -10,7 +10,6 @@ const PriceWithDiscount = (price, dis) => {
 
   return actual;
 };
-
 const CashOnDeliveryOrderController = async (request, response) => {
   try {
     const userId = request.userId;
@@ -19,7 +18,7 @@ const CashOnDeliveryOrderController = async (request, response) => {
 
     const payload = list_items.map((ak) => {
       return {
-        user: userId,
+        userId: userId,
         orderId: `ORD-${new mongoose.Types.ObjectId()}`,
         productId: ak.productId[0]._id,
         product_details: {
@@ -114,7 +113,7 @@ const getOrderProductItems = async ({
   lineItems,
   userId,
   addressId,
-  payment_intent,
+  paymentId,
   payment_status,
 }) => {
   const productList = [];
@@ -131,7 +130,7 @@ const getOrderProductItems = async ({
           name: product.name,
           image: product.images,
         },
-        paymentId: payment_intent,
+        paymentId: paymentId,
         payment_status: payment_status,
         delivery_address: addressId,
         subTotalAmt: Number(item.amount_total / 100),
@@ -165,7 +164,6 @@ const webhookStripe = async (request, response) => {
       });
 
       const order = await OrderModel.insertMany(orderProduct);
-      console.log("order: ", order);
 
       if (Boolean(order[0])) {
         const removeCartItems = await UserModel.findByIdAndUpdate(userId, {
@@ -180,9 +178,33 @@ const webhookStripe = async (request, response) => {
       console.log(`Unhandled event type ${event.type}.`);
   }
 };
+const getOrderDetails = async (request, response) => {
+  try {
+    const userId = request.userId;
+    const orderList = await OrderModel.find({ userId: userId })
+      .sort({
+        createdAt: -1,
+      })
+      .populate("delivery_address");
+
+    return response.json({
+      message: "Order List",
+      error: false,
+      success: true,
+      data: orderList,
+    });
+  } catch (error) {
+    return response.status.json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};
 
 module.exports = {
   CashOnDeliveryOrderController,
   paymentController,
   webhookStripe,
+  getOrderDetails,
 };
