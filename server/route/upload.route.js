@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const auth = require("../middleware/auth");
 const {
-  UploadImageController,
+  uploadImageController,
 } = require("../controllers/UploadImage.controller");
 const upload = require("../middleware/multer");
 
@@ -11,7 +11,7 @@ uploadRouter.post(
   "/upload",
   auth,
   upload.single("image"),
-  UploadImageController
+  uploadImageController
 );
 
 module.exports = {
